@@ -1,0 +1,3 @@
+{"_id":{"$oid":"68901c4d6ec6b8987781a63c"},"name":"Laptop","price":1500,"category":"Electronics"}
+{"_id":{"$oid":"68901c4d6ec6b8987781a63d"},"name":"Smartphone","price":800,"category":"Electronics"}
+{"_id":{"$oid":"68901c4d6ec6b8987781a63e"},"name":"Desk","price":200,"category":"Furniture"}

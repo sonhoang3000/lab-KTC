@@ -1,0 +1,2 @@
+{"_id":{"$oid":"68901c566ec6b8987781a641"},"orderId":1,"customerName":"John Doe","orderDate":{"$date":"2025-08-04T00:00:00Z"},"totalAmount":2300}
+{"_id":{"$oid":"68901c566ec6b8987781a642"},"orderId":2,"customerName":"Jane Smith","orderDate":{"$date":"2025-08-04T00:00:00Z"},"totalAmount":1200}
