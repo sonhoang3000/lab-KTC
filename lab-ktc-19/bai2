@@ -1,0 +1,120 @@
+-- YÊU CẦU 1
+SELECT id, name, origin
+FROM product
+WHERE origin = 'Trung Quoc';
+
+-- YÊU CẦU 2
+SELECT id, name, unit
+FROM product
+WHERE unit IN ('cay', 'quyen');
+
+-- YÊU CẦU 3
+SELECT id, name
+FROM product
+WHERE name LIKE 'B%' AND id LIKE '%01';
+
+-- YÊU CẦU 4
+SELECT id, name, origin, price
+FROM product
+WHERE origin = 'Trung Quoc' AND price BETWEEN 30000 AND 40000;
+
+-- YÊU CẦU 5
+SELECT id, name, origin, price
+FROM product
+WHERE origin IN ('Trung Quoc', 'Thai Lan') AND price BETWEEN 30000 AND 40000;
+
+-- YÊU CẦU 6
+SELECT id, invoice_total
+FROM invoice
+WHERE invoice_date BETWEEN '2007-01-01' AND '2007-01-02';
+
+-- YÊU CẦU 7
+SELECT id, invoice_date, invoice_total
+FROM invoice
+WHERE invoice_date = '2007-01-01'
+ORDER BY invoice_date ASC, invoice_total DESC;
+
+-- YÊU CẦU 8
+SELECT DISTINCT c.id, c.full_name
+FROM customer c
+JOIN invoice i ON c.id = i.customer_id
+WHERE i.invoice_date = '2007-01-01';
+
+-- YÊU CẦU 9
+SELECT i.id, i.invoice_total
+FROM invoice i
+JOIN employee e ON i.employee_id = e.id
+WHERE e.full_name = 'Nguyen Van B'
+  AND i.invoice_date = '2006-01-28';
+
+-- YÊU CẦU 10
+SELECT DISTINCT invoice_id
+FROM invoice_detail
+WHERE product_id IN ('BB01', 'BB02');
+
+-- YÊU CẦU 11
+SELECT invoice_id
+FROM invoice_detail
+WHERE product_id IN ('BB01', 'BB02')
+GROUP BY invoice_id, product_id
+HAVING SUM(amount) BETWEEN 10 AND 20;
+
+-- YÊU CẦU 12
+SELECT *
+FROM invoice
+WHERE invoice_total = (SELECT MAX(invoice_total) FROM invoice)
+   OR invoice_total = (SELECT MIN(invoice_total) FROM invoice);
+
+-- YÊU CẦU 13
+SELECT AVG(invoice_total) AS avg_total
+FROM invoice
+WHERE YEAR(invoice_date) = 2006;
+
+-- YÊU CẦU 14
+SELECT SUM(p.price * d.amount) AS total_profit
+FROM invoice_detail d
+JOIN product p ON d.product_id = p.id
+JOIN invoice i ON d.invoice_id = i.id
+WHERE YEAR(i.invoice_date) = 2006;
+
+-- YÊU CẦU 15
+SELECT c.id, c.full_name, SUM(d.amount) AS total_quantity
+FROM customer c
+JOIN invoice i ON c.id = i.customer_id
+JOIN invoice_detail d ON i.id = d.invoice_id
+GROUP BY c.id, c.full_name
+ORDER BY total_quantity DESC
+LIMIT 3;
+
+-- YÊU CẦU 16
+SELECT COUNT(*) AS total_products_china
+FROM product
+WHERE origin = 'Trung Quoc';
+
+-- YÊU CẦU 17
+SELECT COUNT(*) AS total_products_china_thailand
+FROM product
+WHERE origin IN ('Trung Quoc', 'Thai Lan');
+
+-- YÊU CẦU 18
+SELECT origin, COUNT(*) AS total_products
+FROM product
+GROUP BY origin;
+
+-- YÊU CẦU 19
+SELECT origin,
+       MAX(price) AS max_price,
+       MIN(price) AS min_price,
+       AVG(price) AS avg_price
+FROM product
+GROUP BY origin;
+
+-- YÊU CẦU 20
+SELECT 
+    i.invoice_date,
+    SUM(p.price * d.amount) AS daily_profit
+FROM invoice_detail d
+JOIN product p ON d.product_id = p.id
+JOIN invoice i ON d.invoice_id = i.id
+GROUP BY i.invoice_date
+ORDER BY i.invoice_date;
